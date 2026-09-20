@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Retro Pong</title>
+  <link rel="stylesheet" href="ping.css">
+</head>
+<body>
+
+  <div id="game-arena" tabindex="0"> <!-- tabindex нужен для события focus/blur -->
+    <div class="center-line"></div>
+    
+    <div class="score-board" id="score-board">
+      <div id="p1-score" class="score" data-player="1">0</div>
+      <div id="p2-score" class="score" data-player="2">0</div>
+    </div>
+
+    <div id="left-paddle" class="paddle"></div>
+    <div id="right-paddle" class="paddle"></div>
+    <div id="ball"></div>
+
+    <!-- Слой для динамически создаваемых DOM-элементов (требование лабораторной) -->
+    <div id="effects-layer"></div>
+
+    <!-- Интерфейс 1: Стартовое меню -->
+    <div id="message-screen" class="screen">
+      <h2 id="msg-title">РЕТРО ПОНГ</h2>
+      <p id="msg-sub">Нажмите пробел для старта</p>
+      <button id="btn-settings" class="retro-btn">НАСТРОЙКИ</button>
+    </div>
+
+    <!-- Интерфейс 2: Настройки -->
+    <div id="settings-screen" class="screen" style="display: none;">
+      <h2>НАСТРОЙКИ</h2>
+      <div class="setting-item">
+        <label>Скорость мяча:</label>
+        <input type="range" id="speed-slider" min="2" max="8" value="4">
+      </div>
+      <div class="setting-item">
+        <label>Размер ракеток:</label>
+        <input type="range" id="size-slider" min="50" max="150" value="90">
+      </div>
+      <button id="btn-apply-settings" class="retro-btn">ПРИМЕНИТЬ И СТАРТ</button>
+    </div>
+
+    <!-- Зоны для сенсорного управления (Требование: сенсорные события) -->
+    <div id="touch-zone-left" class="touch-zone"></div>
+    <div id="touch-zone-right" class="touch-zone"></div>
+  </div>
+
+  <script src="pong.js"></script>
+</body>
+</html>
+
