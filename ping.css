@@ -22,7 +22,7 @@ body {
   position: relative; width: 800px; height: 500px;
   border: 6px solid var(--retro-purple); box-sizing: border-box;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
-  background-color: #1a1a24; /* Убрал картинку для чистоты DOM-теста */
+  background-image: url('f3915ae6f2f0bccb33e19b66089c58ed.jpg');
   outline: none; /* Убираем рамку при focus */
 }
 
