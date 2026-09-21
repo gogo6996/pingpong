@@ -1,6 +1,3 @@
- // ==========================================
-// 1. КОНСТАНТЫ И ПОЛУЧЕНИЕ ЭЛЕМЕНТОВ (Требование: get*(), query*())
-// ==========================================
 const arena = document.getElementById('game-arena');
 const arenaWidth = 800;
 const arenaHeight = 500;
@@ -17,9 +14,8 @@ const messageScreen = document.getElementById('message-screen');
 const settingsScreen = document.getElementById('settings-screen');
 const effectsLayer = document.getElementById('effects-layer');
 
-// ==========================================
-// 2. СОСТОЯНИЕ ИГРЫ И АТРИБУТЫ (Требование: getAttribute, setAttribute, hasAttribute)
-// ==========================================
+
+// getAttribute, setAttribute, hasAttribute)
 let p1Score = 0, p2Score = 0;
 let isPlaying = false;
 let p1Y = 205, p2Y = 205;
@@ -30,16 +26,12 @@ let paddleSpeed = 7;
 let baseBallSpeed = 4;
 let currentPaddleHeight = 90;
 
-// Демонстрация работы с атрибутами (Требование: Attr, setAttribute)
 arena.setAttribute('data-game-state', 'menu');
 if (arena.hasAttribute('data-difficulty')) {
-    arena.removeAttribute('data-difficulty'); // Чистим, если было
+    arena.removeAttribute('data-difficulty');
 }
 arena.setAttribute('data-difficulty', 'normal');
 
-// ==========================================
-// 3. ОБРАБОТКА КЛАВИАТУРЫ (Требование: keydown, keyup, Event.key, preventDefault)
-// ==========================================
 const keys = { w: false, s: false, ArrowUp: false, ArrowDown: false };
 
 window.addEventListener('keydown', (e) => {
@@ -47,7 +39,7 @@ window.addEventListener('keydown', (e) => {
         keys[e.key] = true;
         e.preventDefault(); // Запрещаем скролл страницы стрелками
     }
-    // Запуск игры через Promise (Требование: объект Promise)
+    // объект Promise
     if (e.code === 'Space' && arena.getAttribute('data-game-state') !== 'playing') {
         startGameWithPromise();
     }
@@ -56,18 +48,15 @@ window.addEventListener('keydown', (e) => {
 window.addEventListener('keyup', (e) => {
     if (e.key in keys) keys[e.key] = false;
 });
+//mouse events, focus, blur
 
-// ==========================================
-// 4. ОБРАБОТКА МЫШИ И СОБЫТИЙ UI (Требование: mouse events, focus, blur)
-// ==========================================
 const btnSettings = document.getElementById('btn-settings');
 const btnApply = document.getElementById('btn-apply-settings');
 const speedSlider = document.getElementById('speed-slider');
 const sizeSlider = document.getElementById('size-slider');
 
-// События мыши (click)
 btnSettings.addEventListener('click', (e) => {
-    e.stopPropagation(); // Требование: stopPropagation
+    e.stopPropagation(); // stopPropagation
     console.log(`Клик по настройкам. Время события (timestamp): ${e.timeStamp}`);
     showSettingsScreen();
 });
@@ -76,7 +65,7 @@ btnApply.addEventListener('click', () => {
     baseBallSpeed = parseInt(speedSlider.value);
     currentPaddleHeight = parseInt(sizeSlider.value);
     
-    // Изменение структуры DOM (Требование: style, свойства узлов)
+    // style, свойства узлов
     leftPaddle.style.height = `${currentPaddleHeight}px`;
     rightPaddle.style.height = `${currentPaddleHeight}px`;
     
@@ -84,8 +73,7 @@ btnApply.addEventListener('click', () => {
     startGameWithPromise();
 });
 
-// Не-пользовательские события: Фокус (Требование: focus, blur)
-// Если игрок свернул вкладку, игра ставится на паузу
+//focus, blur
 arena.addEventListener('blur', () => {
     if (isPlaying) {
         isPlaying = false;
@@ -102,19 +90,18 @@ arena.addEventListener('focus', () => {
     }
 });
 
-// ==========================================
-// 5. СЕНСОРНЫЕ СОБЫТИЯ (Требование: touch events)
-// ==========================================
+// touch events
+
 const touchZoneLeft = document.getElementById('touch-zone-left');
 const touchZoneRight = document.getElementById('touch-zone-right');
 
 function handleTouch(e) {
-    e.preventDefault(); // Требование: preventDefault (отмена скролла)
+    e.preventDefault(); 
     const touch = e.touches[0];
     const rect = arena.getBoundingClientRect();
     const relativeY = touch.clientY - rect.top;
     
-    // Определяем, какая ракетка движется, через target (Требование: Event.target)
+    // Определяем, какая ракетка движется, через target (Event.target)
     if (e.target.id === 'touch-zone-left') {
         p1Y = Math.max(0, Math.min(arenaHeight - currentPaddleHeight, relativeY - currentPaddleHeight / 2));
     } else if (e.target.id === 'touch-zone-right') {
@@ -122,17 +109,15 @@ function handleTouch(e) {
     }
 }
 
-// Привязка через on*-свойства (Требование: on*-свойства)
+// Привязка через on*-свойства 
 touchZoneLeft.ontouchmove = handleTouch;
 touchZoneRight.ontouchmove = handleTouch;
 touchZoneLeft.ontouchstart = (e) => { if(!isPlaying) startGameWithPromise(); };
 
-// ==========================================
-// 6. ПОЛЬЗОВАТЕЛЬСКИЕ (КАСТОМНЫЕ) СОБЫТИЯ (Требование: CustomEvent, dispatchEvent)
-// ==========================================
-// Создаем кастомное событие "Мяч отбит"
+// CustomEvent, dispatchEvent
+// событие "Мяч отбит"
 const ballHitEvent = new CustomEvent('ballHit', {
-    bubbles: true, // Требование: свойство bubbles
+    bubbles: true, 
     detail: { player: 0, speed: 0 }
 });
 
@@ -142,24 +127,21 @@ function triggerBallHit(player, speed) {
     arena.dispatchEvent(ballHitEvent); // Генерируем событие
 }
 
-// Слушаем кастомное событие (демонстрация всплытия и target)
 arena.addEventListener('ballHit', (e) => {
     console.log(`Кастомное событие! Игрок: ${e.detail.player}, Скорость: ${e.detail.speed.toFixed(2)}`);
-    // Демонстрация работы со связями DOM (Требование: parentNode, nextSibling)
+    // Демонстрация работы со связями DOM (parentNode, nextSibling)
     const scoreDiv = e.target.querySelector(`#p${e.detail.player}-score`);
     if (scoreDiv && scoreDiv.parentNode) {
-        // Получаем следующий элемент (центральный разделитель или второй счет)
+        // центральный разделитель или второй счет
         const nextEl = scoreDiv.nextElementSibling; 
         console.log('Родитель счетчика:', scoreDiv.parentNode.className);
     }
 });
 
-// ==========================================
-// 7. ЛОГИКА ИГРЫ И ДИНАМИЧЕСКИЙ DOM (Требование: append, removeChild, replaceWith, animationend)
-// ==========================================
+// Динамический DOM (append, removeChild, replaceWith, animationend)
 
 function startGameWithPromise() {
-    // Обертываем ожидание старта в Promise (Требование: объект Promise)
+    // Обертываем ожидание старта в Promise 
     const startPromise = new Promise((resolve) => {
         messageScreen.style.display = 'none';
         settingsScreen.style.display = 'none';
@@ -194,7 +176,7 @@ function resetBall(direction) {
     ballVY = baseBallSpeed * Math.sin(angle);
 }
 
-// Динамическое создание DOM-элементов при голе (Требование: append, removeChild, replaceWith)
+// Динамическое создание DOM-элементов при голе (append, removeChild, replaceWith)
 function createScorePopup(x, y, text) {
     const popup = document.createElement('div');
     popup.className = 'score-popup';
@@ -202,12 +184,12 @@ function createScorePopup(x, y, text) {
     popup.style.left = `${x}px`;
     popup.style.top = `${y}px`;
     
-    effectsLayer.append(popup); // Требование: append
+    effectsLayer.append(popup); // append
 
-    // Обработка не-пользовательского события окончания анимации (Требование: animationend)
+    // Обработка не-пользовательского события окончания анимации (animationend)
     popup.addEventListener('animationend', (e) => {
         console.log('Анимация завершена, элемент:', e.target);
-        popup.remove(); // Требование: remove (или removeChild)
+        popup.remove(); //remove 
     });
 }
 
@@ -216,7 +198,7 @@ function checkWinState(lastLoserDirection) {
         isPlaying = false;
         arena.setAttribute('data-game-state', 'ended');
         
-        // Демонстрация replaceWith (Требование: replaceWith)
+        // replaceWith
         const oldTitle = document.getElementById('msg-title');
         const newTitle = document.createElement('h2');
         newTitle.id = 'msg-title';
