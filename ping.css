@@ -53,7 +53,7 @@ body {
   box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.3);
 }
 
-/* Экраны меню */
+/* меню */
 .screen {
   position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
   text-align: center; background: var(--retro-green); padding: 25px 40px;
@@ -74,15 +74,15 @@ body {
 .setting-item label { font-size: 0.9rem; color: #fff; }
 .setting-item input { width: 120px; }
 
-/* Зоны тач-управления */
+/* тач-управление */
 .touch-zone {
   position: absolute; top: 0; bottom: 0; width: 50%; z-index: 5;
-  /* background: rgba(255,0,0,0.1); */ /* Можно включить для отладки */
+  /* background: rgba(255,0,0,0.1); для отладки */
 }
 #touch-zone-left { left: 0; }
 #touch-zone-right { right: 0; }
 
-/* Анимация для динамически создаваемых DOM-элементов (требование: animationend) */
+/* анимация для динамически создаваемых DOM-элементов (animationend) */
 .score-popup {
   position: absolute; font-size: 2rem; font-weight: bold; color: var(--retro-yellow);
   pointer-events: none; animation: floatUp 1s forwards;
