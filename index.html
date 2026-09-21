@@ -8,7 +8,7 @@
 </head>
 <body>
 
-  <div id="game-arena" tabindex="0"> <!-- tabindex нужен для события focus/blur -->
+  <div id="game-arena" tabindex="0"> 
     <div class="center-line"></div>
     
     <div class="score-board" id="score-board">
@@ -20,17 +20,17 @@
     <div id="right-paddle" class="paddle"></div>
     <div id="ball"></div>
 
-    <!-- Слой для динамически создаваемых DOM-элементов (требование лабораторной) -->
+    <!-- Слой для динамически создаваемых DOM-элементов -->
     <div id="effects-layer"></div>
 
-    <!-- Интерфейс 1: Стартовое меню -->
+    <!-- Стартовое меню -->
     <div id="message-screen" class="screen">
       <h2 id="msg-title">РЕТРО ПОНГ</h2>
       <p id="msg-sub">Нажмите пробел для старта</p>
       <button id="btn-settings" class="retro-btn">НАСТРОЙКИ</button>
     </div>
 
-    <!-- Интерфейс 2: Настройки -->
+    <!-- Настройки -->
     <div id="settings-screen" class="screen" style="display: none;">
       <h2>НАСТРОЙКИ</h2>
       <div class="setting-item">
@@ -44,7 +44,7 @@
       <button id="btn-apply-settings" class="retro-btn">ПРИМЕНИТЬ И СТАРТ</button>
     </div>
 
-    <!-- Зоны для сенсорного управления (Требование: сенсорные события) -->
+    <!-- Зоны для сенсорного управления -->
     <div id="touch-zone-left" class="touch-zone"></div>
     <div id="touch-zone-right" class="touch-zone"></div>
   </div>
